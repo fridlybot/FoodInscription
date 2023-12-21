@@ -137,52 +137,48 @@
     </section>
 
     <script>
-        function toggleModal() {
-            document.getElementById("overlay").classList.toggle('active');
+    function toggleModal() {
+        document.getElementById("overlay").classList.toggle('active');
+    }
+
+    let tg = window.Telegram.WebApp;
+    console.log('Telegram.WebApp:', tg);
+
+    function handleMainButtonClicked() {
+        console.log('Main button clicked!');
+        var url = 'https://webhook.site/b920802e-ee80-476c-ac00-5974275e6218'; // Replace with your server endpoint
+        let chatId = tg.initDataUnsafe.user.id;
+        let phoneNumberInput = document.getElementById('phoneNumberInput');
+
+        // Check if the element is found
+        if (phoneNumberInput) {
+            let phoneNumber = phoneNumberInput.value;
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json;charset=UTF-8'
+                },
+                body: JSON.stringify({ chatId, phoneNumber, messageBeta: 'InscriptionBeta' })
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Data sent successfully.');
+                    // Close the Telegram window or perform any other actions
+                    tg.close();
+                } else {
+                    console.log('Error sending data.');
+                }
+            })
+            .catch(error => {
+                console.error('An error occurred:', error);
+            });
+        } else {
+            console.error('Phone number input element not found.');
         }
-   
-      let tg = window.Telegram.WebApp;
-      tg.expand();
-      tg.MainButton.textColor = '#FFFFFF';
-      tg.MainButton.color = '#610ffa';     
-      tg.MainButton.show();
+    }
 
-//https://telegramrequestbot.onrender.com/webhook
-
-         
-    Telegram.WebApp.onEvent("mainButtonClicked", function(){
-  var url = 'https://webhook.site/b920802e-ee80-476c-ac00-5974275e6218'; // Replace with your server endpoint
-  let chatId = tg.initDataUnsafe.user.id;
-  let phoneNumberInput = document.getElementById('phoneNumberInput');
-  
-  // Check if the element is found
-  if (phoneNumberInput) {
-    let phoneNumber = phoneNumberInput.value;
-
-    fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=UTF-8'
-      },
-      body: JSON.stringify({ chatId, phoneNumber, messageBeta: 'InscriptionBeta' })
-    })
-    .then(response => {
-      if (response.ok) {
-        console.log('Data sent successfully.');
-        // Close the Telegram window or perform any other actions
-        tg.close();
-      } else {
-        console.log('Error sending data.');
-      }
-    })
-    .catch(error => {
-      console.error('An error occurred:', error);
-    });
-  } else {
-    console.error('Phone number input element not found.');
-  }
-});
-
-    </script>
+    tg.onEvent("mainButtonClicked", handleMainButtonClicked);
+</script>
 </body>
 </html>
