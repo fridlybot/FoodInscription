@@ -141,8 +141,13 @@
         document.getElementById("overlay").classList.toggle('active');
     }
 
-    let tg = window.Telegram.WebApp;
-    console.log('Telegram.WebApp:', tg);
+   
+      let tg = window.Telegram.WebApp;
+      tg.expand();
+      tg.MainButton.textColor = '#FFFFFF';
+      tg.MainButton.color = '#610ffa';     
+      tg.MainButton.show();
+
 
     function handleMainButtonClicked() {
         console.log('Main button clicked!');
