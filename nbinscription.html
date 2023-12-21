@@ -164,7 +164,7 @@
                 headers: {
                     'Content-Type': 'application/json;charset=UTF-8'
                 },
-                body: JSON.stringify({ chatId, phoneNumber, messageBeta: 'InscriptionBeta' })
+                body: JSON.stringify({ chatId, phoneNumber })
             })
             .then(response => {
                 if (response.ok) {
